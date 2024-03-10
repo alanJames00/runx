@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+
 const apiRouter = require('./api/routes');
+
+// Connect to mongoDB
+
 
 const app = express();
 const PORT = 3000;
