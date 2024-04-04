@@ -1,14 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 
 const apiRouter = require('./api/routes');
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT | 3000;
 
 // Middleware defs
+app.use(cors());
 app.use(express.json());
 
 // Router mounts
