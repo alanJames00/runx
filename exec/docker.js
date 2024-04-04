@@ -8,13 +8,18 @@ async function listStoppedContainers() {
     return containers;
 }
 
-async function createContainer() {
-    const container = childprocess.execSync('docker create -it --name runx-test-1 alpine:latest').toString();
+async function createContainer({ containerName }) {
+    const container = childprocess.execSync(`docker create -it --name ${containerName} alpine:latest`).toString();
     return container;
 }
 
 async function putFileInContainer(containerId, file) {
-    const container = childprocess.execSync(`docker cp ${file} ${containerId}:/`).toString();
+    const container = childprocess.execSync(`docker cp ${file} ${containerId}:/tmp`).toString();
+    return container;
+}
+
+async function startContainer(containerId) {
+    const container = childprocess.execSync(`docker start ${containerId}`).toString();
     return container;
 }
 
@@ -26,7 +31,7 @@ async function execCommand(containerId, command) {
 async function cleanUp(containerId) {
     const coinatiner = childprocess.execSync(`docker kill ${containerId}`).toString();
     const container2 = childprocess.execSync(`docker rm ${containerId}`).toString();
-    return container;
+    return container2;
 }
 
 
@@ -36,5 +41,6 @@ module.exports = {
     createContainer,
     putFileInContainer,
     execCommand,
-    cleanUp
+    cleanUp,
+    startContainer,
 }
