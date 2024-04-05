@@ -1,5 +1,7 @@
 const express = require('express');
 const apiRouter = express.Router();
+const exec = require('../exec/execute');
+
 
 apiRouter.get('/t', (req, res) => {
 
@@ -28,9 +30,22 @@ apiRouter.get('/runtimes', async (req, res) => {
 apiRouter.post('/execute', async (req, res) => {
   try {
     
-    // parse the code and runtime
     const codeString = req.body.code;
     const runtime = req.body.runtime;
+
+    const result = await exec.executeCode({
+      codeString: codeString,
+      runtime: runtime,
+    })
+
+    if(result == 'Invalid value for runtime') {
+      res.json({
+        err:'Invalid value for runtime' 
+      })
+    }
+    res.json({
+      stdout: result,
+    })
   }
   catch(e) {
     console.log(e);

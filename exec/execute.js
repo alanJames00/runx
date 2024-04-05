@@ -20,9 +20,12 @@ async function executeCode({codeString, runtime}) {
             case "cpp":
                 filename = filename+"cpp";
                 break;
-            case 'py':
+            case 'py3':
                 filename = filename+"py"
                 break;
+
+            default:
+                return 'Invalid value for runtime'
         }
         console.log(codeString);
         // create  the file
@@ -46,14 +49,17 @@ async function executeCode({codeString, runtime}) {
         console.log(startRes);
 
         // exec the container to echo the file
-        const execRes = await docker.execCommand(containerName, `cat /tmp/${filename}`);
+        const execRes = await docker.execCommand(containerName, `sh run.sh ${runtime} /tmp/${filename}`);
         console.log(execRes);
 
         // cleanup containers
         const cleanUpRes = await docker.cleanUp(containerName);
         console.log(cleanUpRes);
+
+        // decrement the counter
+        counter.decrementContainerCount();
         
-        // remove the file
+        // // remove the file
         await fs.rmSync(`./exec/tmp/${filename}`);
 
         return execRes;
