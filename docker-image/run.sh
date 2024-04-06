@@ -67,13 +67,24 @@ function compile() {
 }
 
 function run() {
+
     
     case $1 in
         "c")
-            ./a.out
-            if [ $? -eq 0 ]; then
+            
+            timeout --foreground 2s ./a.out
+            timeout_exit_status=$?
+
+            if [ $timeout_exit_status -eq 0 ]; then
                 
                 return 0
+
+            elif [ $timeout_exit_status -eq 124 ]; then
+            
+            # timeout kill sigal
+
+                echo "60"
+                return 60
             else
                 
                 echo "50"
@@ -81,10 +92,19 @@ function run() {
             fi
             ;;
         "cpp")
-            ./a.out
-            if [ $? -eq 0 ]; then
+            
+            timeout --foreground 2s ./a.out
+            timeout_exit_status=$?
+
+            if [ $timeout_exit_status -eq 0 ]; then
                 
                 return 0
+            elif [ $timeout_exit_status -eq 124 ]; then
+            
+            # timeout kill sigal
+
+                echo "60"
+                return 60
             else
                 
                 echo "50"
