@@ -2,26 +2,29 @@ const docker = require('./docker');
 const fs = require('fs');
 const uuid = require('uuid');
 const counter = require('../api/counter');
-
+const childprocess = require('child_process');
 // execute the code
-async function executeCode({codeString, runtime}) {
+async function executeCode({ codeString, runtime }) {
 
     try {
 
         // generate uuid
-        const fid = uuid.v4().substring(6,15);
-            
+        const fid = uuid.v4().substring(6, 15);
+
         // switch case to form the filename
         let filename = "sample-" + fid + "."
-        switch(runtime) {
+        switch (runtime) {
             case 'js':
-                filename = filename+"js";
+                filename = filename + "js";
                 break;
             case "cpp":
-                filename = filename+"cpp";
+                filename = filename + "cpp";
                 break;
             case 'py3':
-                filename = filename+"py"
+                filename = filename + "py"
+                break;
+            case 'c':
+                filename = filename + "c";
                 break;
 
             default:
@@ -30,13 +33,13 @@ async function executeCode({codeString, runtime}) {
         console.log(codeString);
         // create  the file
         fs.writeFileSync(`./exec/tmp/${filename}`, codeString, 'utf-8');
-        
-        
+
+
         // create a container
-        const containerName = "runx-pod-"+counter.getContainerCount().toString();
+        const containerName = "runx-pod-" + counter.getContainerCount().toString();
         const createRes = await docker.createContainer({ containerName: containerName });
-        console.log(createRes); 
-        
+        console.log(createRes);
+
         // increment the counter
         counter.incrementContainerCount();
 
@@ -49,22 +52,41 @@ async function executeCode({codeString, runtime}) {
         console.log(startRes);
 
         // exec the container to echo the file
-        const execRes = await docker.execCommand(containerName, `sh run.sh ${runtime} /tmp/${filename}`);
-        console.log(execRes);
+
+        // spawn a child process to exec the container with error handling
+        const execRes = await new Promise((resolve, reject) => {
+            const child = require('child_process').spawn('docker', ['exec', containerName, 'sh', 'run.sh', runtime, `/tmp/${filename}`]);
+            let output = "";
+            let error = "";
+            child.stdout.on('data', (data) => {
+                output += data;
+            });
+            child.stderr.on('data', (data) => {
+                error += data;
+            });
+            child.on('exit', (code) => {
+                    console.log(error);
+                    resolve({
+                        error,
+                        output
+                    });
+            });
+        });
 
         // cleanup containers
-        const cleanUpRes = await docker.cleanUp(containerName);
+        const cleanUpRes = docker.cleanUp(containerName);
         console.log(cleanUpRes);
+
 
         // decrement the counter
         counter.decrementContainerCount();
-        
+
         // // remove the file
         await fs.rmSync(`./exec/tmp/${filename}`);
 
         return execRes;
     }
-    catch(e) {
+    catch (e) {
         console.log(e);
     }
 }
