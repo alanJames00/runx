@@ -18,7 +18,6 @@ function compile() {
                 run $1
             else
                 
-                echo "Error: Compile Error"
                 echo "40"
             fi
             ;;
@@ -30,8 +29,8 @@ function compile() {
                 run $1
             else
                 
-                echo "Error: Compile Error"
                 echo "40"
+                return 40
             fi
             ;;
         "java")
@@ -45,8 +44,8 @@ function compile() {
                 return 0
             else
                 
-                echo "Error: Runtime Error"
                 echo "50"
+                return 50
             fi
             ;;
         "node")
@@ -56,8 +55,8 @@ function compile() {
                 return 0
             else
                
-                echo "Error: Runtime Error"
                 echo "50"
+                return 50
             fi
             ;;
         *)
@@ -76,8 +75,8 @@ function run() {
                 return 0
             else
                 
-                echo "Error: Runtime Error"
                 echo "50"
+                return 50
             fi
             ;;
         "cpp")
@@ -87,8 +86,8 @@ function run() {
                 return 0
             else
                 
-                echo "Error: Runtime Error"
                 echo "50"
+                return 50
             fi
             ;;
 
