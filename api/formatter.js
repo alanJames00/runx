@@ -17,7 +17,7 @@ function fmtOutput({ exitCode, stdout, stderr }){
     
     else if(exitCode == 50) {
         // format runtime error
-        return {...tmpl, stderr: stdout, code: 1, signal: 'RUNTIME_ERR' }
+        return {...tmpl, stderr: stderr, code: 1, signal: 'RUNTIME_ERR' }
     }
 
     // handle successful compilation and running of code
