@@ -49,7 +49,7 @@ function compile() {
                 return 50
             fi
             ;;
-        "node")
+        "js")
             run $1 $2
             if [ $? -eq 0 ]; then
                 
@@ -99,9 +99,9 @@ function run() {
         
             python3 $2
             ;;
-        "node")
+        "js")
             
-            node $2
+            /root/.nvm/versions/node/v18.20.1/bin/node $2
 
             ;;
         *)
