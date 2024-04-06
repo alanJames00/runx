@@ -2,7 +2,6 @@ const docker = require('./docker');
 const fs = require('fs');
 const uuid = require('uuid');
 const counter = require('../api/counter');
-const childprocess = require('child_process');
 // execute the code
 async function executeCode({ codeString, runtime }) {
 
@@ -55,7 +54,7 @@ async function executeCode({ codeString, runtime }) {
 
         // spawn a child process to exec the container with error handling
         const execRes = await new Promise((resolve, reject) => {
-            const child = require('child_process').spawn('docker', ['exec', containerName, 'sh', 'run.sh', runtime, `/tmp/${filename}`]);
+            const child = require('child_process').spawn('docker', ['exec', containerName, 'bash', 'run.sh', runtime, `/tmp/${filename}`]);
             let output = "";
             let error = "";
             child.stdout.on('data', (data) => {
