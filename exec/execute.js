@@ -50,10 +50,10 @@ async function executeCode({ codeString, runtime }) {
         const startRes = await docker.startContainer(containerName);
         console.log(startRes);
 
-        // exec the container to echo the file
 
         // spawn a child process to exec the container with error handling
         const execRes = await new Promise((resolve, reject) => {
+            console.log('bash', 'run.sh', runtime, `/tmp/${filename}`);
             const child = require('child_process').spawn('docker', ['exec', containerName, 'bash', 'run.sh', runtime, `/tmp/${filename}`]);
             let output = "";
             let error = "";
@@ -74,7 +74,7 @@ async function executeCode({ codeString, runtime }) {
             });
         });
 
-        // cleanup containers
+        // // cleanup containers
         const cleanUpRes = docker.cleanUp(containerName);
         console.log(cleanUpRes);
 
