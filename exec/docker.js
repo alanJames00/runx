@@ -9,7 +9,8 @@ function listStoppedContainers() {
 }
 
 function createContainer({ containerName }) {
-    const container = childprocess.execSync(`docker create -it --name ${containerName} runx:latest`).toString();
+    const container = childprocess.execSync(`docker create -it --name ${containerName} runx-ubuntu:latest`).toString();
+    const memRes = childprocess.execSync(`docker update --memory=200m --memory-swap=300m ${containerName}`);
     return container;
 }
 
