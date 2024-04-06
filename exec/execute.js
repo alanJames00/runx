@@ -65,10 +65,12 @@ async function executeCode({ codeString, runtime }) {
                 error += data;
             });
             child.on('exit', (code) => {
-                    console.log(error);
+                    // console.log(error);
+                    console.log('test-code::', code);
                     resolve({
-                        error,
-                        output
+                        stderr: error,
+                        stdout: output,
+                        exitCode: code,
                     });
             });
         });

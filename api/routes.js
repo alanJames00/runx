@@ -1,5 +1,6 @@
 const express = require('express');
 const apiRouter = express.Router();
+const fmt = require('./formatter');
 const exec = require('../exec/execute');
 
 
@@ -43,9 +44,16 @@ apiRouter.post('/execute', async (req, res) => {
         err:'Invalid value for runtime' 
       })
     }
-    res.json({
-      stdout: result,
-    })
+    else {
+
+      const formattedResult = fmt.fmtOutput({
+        exitCode: result.exitCode,
+        stdout: result.stdout,
+        stderr: result.stderr
+      })
+
+      res.json(formattedResult);
+    }
   }
   catch(e) {
     console.log(e);
