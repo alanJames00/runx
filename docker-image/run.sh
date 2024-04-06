@@ -19,6 +19,7 @@ function compile() {
             else
                 
                 echo "40"
+                return 40
             fi
             ;;
         "cpp")
