@@ -1,7 +1,6 @@
 const docker = require('./docker');
 const fs = require('fs');
 const uuid = require('uuid');
-const counter = require('../api/counter');
 // execute the code
 async function executeCode({ codeString, runtime }) {
 
@@ -35,12 +34,10 @@ async function executeCode({ codeString, runtime }) {
 
 
         // create a container
-        const containerName = "runx-pod-" + counter.getContainerCount().toString();
+        const containerName = "runx-pod-" + docker.getContainerCount().toString();
         const createRes = await docker.createContainer({ containerName: containerName });
         console.log(createRes);
 
-        // increment the counter
-        counter.incrementContainerCount();
 
         // copy the file to container
         const putFileRes = await docker.putFileInContainer(containerName, `./exec/tmp/${filename}`)
@@ -79,8 +76,6 @@ async function executeCode({ codeString, runtime }) {
         console.log(cleanUpRes);
 
 
-        // decrement the counter
-        counter.decrementContainerCount();
 
         // // remove the file
         await fs.rmSync(`./exec/tmp/${filename}`);
