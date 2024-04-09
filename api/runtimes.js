@@ -15,6 +15,7 @@ module.exports.runtimes = [{
 },
 {
     language: 'Python3',
-    runtime_alias: 'py3'
+    runtime_alias: 'py3',
+    version: '3.8'
 }
 ]
