@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
+// setup dotenv to inject ENV
+require('dotenv').config();
+
 const apiRouter = require('./api/routes');
 
 

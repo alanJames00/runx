@@ -9,7 +9,7 @@ function listStoppedContainers() {
 }
 
 function createContainer({ containerName }) {
-    const container = childprocess.execSync(`docker create -it --name ${containerName} runx-ub:latest`).toString();
+    const container = childprocess.execSync(`docker create -it --name ${containerName} ${process.env.POD_IMAGE_NAME}`).toString();
     const memRes = childprocess.execSync(`docker update --memory=200m --memory-swap=300m ${containerName}`);
     return container;
 }
@@ -46,7 +46,6 @@ function getContainerCount() {
     return parseInt(stdout.toString())-1;
 }
 
-getContainerCount();
 
 module.exports = {
     listStoppedContainers,
@@ -55,4 +54,5 @@ module.exports = {
     execCommand,
     cleanUp,
     startContainer,
+    getContainerCount,
 }
