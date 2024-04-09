@@ -15,7 +15,7 @@ function compile() {
             
             if [ $? -eq 0 ]; then
                 
-                run $1
+                run $1 $2 $3
             else
                 
                 echo "40"
@@ -27,7 +27,7 @@ function compile() {
             
             if [ $? -eq 0 ]; then
                 
-                run $1
+                run $1 $2 $3
             else
                 
                 echo "40"
@@ -36,10 +36,10 @@ function compile() {
             ;;
         "java")
             javac $2
-            run $1
+            run $1 
             ;;
         "py3")
-            run $1 $2
+            run $1 $2 $3
             if [ $? -eq 0 ]; then
 
                 return 0
@@ -50,7 +50,7 @@ function compile() {
             fi
             ;;
         "js")
-            run $1 $2
+            run $1 $2 $3
             if [ $? -eq 0 ]; then
                 
                 return 0
@@ -72,7 +72,7 @@ function run() {
     case $1 in
         "c")
             
-            timeout --foreground 2s ./a.out
+            echo $3 | timeout --foreground 2s ./a.out
             timeout_exit_status=$?
 
             if [ $timeout_exit_status -eq 0 ]; then
@@ -93,7 +93,7 @@ function run() {
             ;;
         "cpp")
             
-            timeout --foreground 2s ./a.out
+            echo $3 | timeout --foreground 2s ./a.out
             timeout_exit_status=$?
 
             if [ $timeout_exit_status -eq 0 ]; then
@@ -117,11 +117,11 @@ function run() {
             ;;
         "py3")
         
-            python3 $2
+            echo "$3" | timeout --foreground 2s python3 $2
             ;;
         "js")
             
-            /root/.nvm/versions/node/v18.20.1/bin/node $2
+            timeout --foreground 2s /root/.nvm/versions/node/v18.20.1/bin/node $2
 
             ;;
         *)
@@ -130,4 +130,4 @@ function run() {
     esac
 }
 
-compile $1 $2
+compile $1 $2 $3
