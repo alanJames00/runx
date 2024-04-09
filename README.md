@@ -26,7 +26,6 @@ be provided.
 
 2. Execute code in a specific language
 
-
 `POST /api/v2/execute`
 This endpoint requests execution of some arbitrary code.
 
@@ -34,6 +33,32 @@ This endpoint requests execution of some arbitrary code.
 -   `code` (**required**) The source code to execute, must be a string containing text to compile and run.
 -   `stdin` (_optional_) The text to pass as stdin to the program. Must be a string or left out. Defaults to blank string.
 
+Sample Request:
+```json
+{
+
+    "code" : "#include<iostream>\nusing namespace std;\nint main() { int a; cin>>a; cout<<(a+2); return 0; }",
+    "runtime" : "cpp",
+    "stdin": "5"
+}
+```
+
+Sample Response:
+```json
+{
+    "stdout": "7",
+    "stderr": null,
+    "compile_output": null,
+    "signal": "SUCCESS",
+    "code": 0
+}
+```
+
+signal can be one of the following values:
+-   `SUCCESS` - Execution completed successfully. Then stdout will contain the output of the program.
+-   `RUNTIME_ERR` - Execution failed due to a runtime error. Then stderr will contain the error message.
+-   `COMPILE_ERR` - Execution failed due to a compilation error. Then compile_output will contain the error message.
+-   `TIME_LIMIT_EXCEED` - Execution failed due to time limit exceed (Default 2 seconds). Then stdout will contain the output of the program till the time limit exceed.
 
 
 ## Self Hosting
