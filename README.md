@@ -26,7 +26,7 @@ be provided.
 
 2. Execute code in a specific language
 
-`POST /api/v2/execute`
+`POST /api/execute`
 This endpoint requests execution of some arbitrary code.
 
 -   `runtime` (**required**) The language to use for execution, must be a string. One of the alaises returned by `/api/runtimes` endpoint.
