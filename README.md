@@ -13,17 +13,45 @@
 ## Public API
 A Public API of runx is available for hobby users and testing purposes. It's limited to 5 submissions per second to enforce ***fair-usage policy***
 
+**API URL**: https://runx.alanj.live/
+
+### API Usage
+
+1. List available languages or runtimes
+
+`GET /api/runtimes`
+This endpoint will return the supported languages along with the current version and alias. To execute
+code for a particular language using the `/api/execute` endpoint, the alias must
+be provided.
+
+2. Execute code in a specific language
+
+
+`POST /api/v2/execute`
+This endpoint requests execution of some arbitrary code.
+
+-   `runtime` (**required**) The language to use for execution, must be a string. One of the alaises returned by `/api/runtimes` endpoint.
+-   `code` (**required**) The source code to execute, must be a string containing text to compile and run.
+-   `stdin` (_optional_) The text to pass as stdin to the program. Must be a string or left out. Defaults to blank string.
+
+
+
 ## Self Hosting
 Runx can be self hosted in any machines with docker. The self hosted runx has no limits on submissions and can be modified to any needs
 
 Follow the below instruction to self host
 
-### 1. Clone the repo
+### 1. Clone the repo and setup the project
 ```
     git clone https://github.com/alanJames00/runx.git
+
+    cd runx/
+    
+    npm i
 ```
 
-### 2. 
+
+### 2. Setting up the docker image 
 
 runx uses a special docker image named as 'runx-pod-ubuntu' to run the code in isolated environments. The image is available in docker hub. Pull the image using the below command
 
