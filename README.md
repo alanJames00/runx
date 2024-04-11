@@ -60,6 +60,13 @@ signal can be one of the following values:
 -   `COMPILE_ERR` - Execution failed due to a compilation error. Then compile_output will contain the error message.
 -   `TIME_LIMIT_EXCEED` - Execution failed due to time limit exceed (Default 2 seconds). Then stdout will contain the output of the program till the time limit exceed.
 
+## Supported Languages
+`c`,
+`cpp`,
+`python3`,
+`nodejs`,
+
+
 
 ## Self Hosting
 Runx can be self hosted in any machines with docker. The self hosted runx has no limits on submissions and can be modified to any needs
