@@ -9,7 +9,7 @@ function listStoppedContainers() {
 }
 
 function createContainer({ containerName }) {
-    const container = childprocess.execSync(`docker create -it --name ${containerName} ${process.env.POD_IMAGE_NAME}`).toString();
+    const container = childprocess.execSync(`docker create -it --name ${containerName} --pids-limit ${process.env.PID_LIMIT} ${process.env.POD_IMAGE_NAME}`).toString();
     const memRes = childprocess.execSync(`docker update --memory=200m --memory-swap=300m ${containerName}`);
     return container;
 }
