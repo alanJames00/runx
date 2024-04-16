@@ -66,7 +66,11 @@ signal can be one of the following values:
 `python3`,
 `nodejs`,
 
-
+## Security Features
+- **Isolation**: Code execution is performed within isolated environments, ensuring security and preventing interference between different executions. runx uses docker as primary isolation mechanism.
+- **Time Limit**: runx enforces a time limit of 2 (default) seconds for code execution. If the code takes longer than 2 seconds to execute, the execution is terminated.
+- **Process Limit**: runx enforces a process limit of 100 for code execution. This prevents users from running multiple processes in the same environment or running fork bombs.
+- **Network Isolation**: runx containers are not allowed to access the network or internet. This prevents users from running malicious code that could access sensitive information or launch attacks.
 
 ## Self Hosting
 Runx can be self hosted in any machines with docker. The self hosted runx has no limits on submissions and can be modified to any needs
