@@ -4,6 +4,7 @@ const fmt = require("./formatter");
 const exec = require("../exec/execute");
 const runtimes = require("./runtimes");
 const docker = require("../exec/docker");
+const cache = require("../db/cache");
 
 const MAX_CONTAINERS = 5;
 
@@ -34,6 +35,20 @@ apiRouter.post("/execute", async (req, res) => {
 			const runtime = req.body.runtime;
 			const stdin = req.body.stdin;
 
+			// check cache
+			const cacheResult = await cache.fetchCacheResult({
+				inputObj: {
+					codeString,
+					runtime,
+					stdin,
+				},
+			});
+
+			if (cacheResult != null) {
+				// return cache
+				return res.json(cacheResult);
+			}
+
 			let stdinData = null;
 			// check if stdin in valid
 			if (stdin == "" || stdin == null || stdin == undefined) {
@@ -57,6 +72,16 @@ apiRouter.post("/execute", async (req, res) => {
 					exitCode: result.exitCode,
 					stdout: result.stdout,
 					stderr: result.stderr,
+				});
+
+				// cache the result
+				await cache.cacheResult({
+					inputObj: {
+						codeString,
+						runtime,
+						stdin,
+					},
+					outputObj: formattedResult,
 				});
 
 				res.json(formattedResult);
