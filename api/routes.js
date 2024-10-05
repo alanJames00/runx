@@ -82,6 +82,7 @@ apiRouter.post("/execute", async (req, res) => {
 						stdin,
 					},
 					outputObj: formattedResult,
+					expiry: process.env.CACHE_EXPIRES_SECONDS,
 				});
 
 				res.json(formattedResult);

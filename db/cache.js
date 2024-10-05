@@ -4,10 +4,10 @@ const sha256 = require("sha256");
 // create an instance of redis
 const redis = new Redis();
 
-async function cacheResult({ inputObj, outputObj }) {
+async function cacheResult({ inputObj, outputObj, expiry = 0 }) {
 	// stringify and hash the inputObjtr
 	const inputHash = sha256(JSON.stringify(inputObj));
-	await redis.set(inputHash, JSON.stringify(outputObj));
+	await redis.set(inputHash, JSON.stringify(outputObj), expiry);
 }
 
 async function fetchCacheResult({ inputObj }) {
