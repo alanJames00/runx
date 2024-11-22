@@ -12,6 +12,7 @@ const PORT = process.env.PORT | 3000;
 // Middleware defs
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 // Router mounts
 app.use("/api", apiRouter);
