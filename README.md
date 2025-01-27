@@ -13,7 +13,7 @@
 ## Public API
 A Public API of runx is available for hobby users and testing purposes. It's limited to 5 submissions per second to enforce ***fair-usage policy***
 
-**API URL**: https://runx.alanj.live/
+**API URL**: ~~https://runx.alanj.live/~~
 
 ### API Usage
 
