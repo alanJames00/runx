@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "tsc-watch --onSuccess \"node build/src/server.js\"",
-    "build": "tsc"
+    "dev": "tsc-watch --onSuccess \"node build/src/server.js\" --onFailure \"echo 'Failed to build TS'\"",
+    "build": "rm -rf build && tsc",
+    "start": "node build/src/server.js"
   },
   "keywords": [],
   "author": "",
