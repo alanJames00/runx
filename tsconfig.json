@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        /* Language and environment */
+        "target": "ES2020", // modern Node features (async/await, optional chaining)
+        "module": "CommonJS", // for Node.js require
+        "moduleResolution": "node",
+        "esModuleInterop": true, // allow import default from CJS modules
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true, // faster builds
+        /* Project structure */
+        "rootDir": ".", // all source files go here /// TODO: change to ./src
+        "outDir": "./build", // compiled output
+        "resolveJsonModule": true, // allow import x from './config.json'
+        /* Type safety */
+        "strict": true, // enable all strict type checks
+        "noImplicitAny": false, // relax a bit for gradual migration
+        /* Gradual migration support */
+        "allowJs": true, // compile JS files too
+        "checkJs": false, // don’t type-check JS yet
+        "declaration": true, // generate .d.ts files
+        "sourceMap": true // useful for debugging
+    },
+    "include": [
+        "src",
+        "**/*.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "build"
+    ]
+}

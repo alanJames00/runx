@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "tsc-watch --onSuccess \"node build/src/server.js\"",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +20,11 @@
     "pg": "^8.11.5",
     "sha256": "^0.2.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.5.2",
+    "tsc-watch": "^7.1.1",
+    "typescript": "^5.9.2"
   }
 }
