@@ -1,6 +1,10 @@
 // exports a redis compliant kv store instance
+type TRedis = {
+	store: Record<string, { value: any, expiresAt: number }>;
+}
 
-class Redis {
+class Redis implements TRedis {
+	store: Record<string, { value: any, expiresAt: number }>;
 	constructor() {
 		this.store = {};
 	}
@@ -31,6 +35,7 @@ class Redis {
 		}
 
 		if (currentTime > valueObj.expiresAt) {
+			this.delete(key); // non lazy delete
 			return null;
 		}
 
@@ -39,8 +44,11 @@ class Redis {
 
 	// delete key value pair
 	delete(key) {
-		this.store[key] = undefined;
+		this.store[key] = {
+			value: undefined,
+			expiresAt: 0,
+		};
 	}
 }
 
-module.exports = Redis;
+export default Redis;
