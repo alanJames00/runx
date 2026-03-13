@@ -9,12 +9,6 @@
 - **Support for Multiple Languages**: runx supports a wide range of programming languages, including C, C++, Python, and JavaScript.
 - **Blazingly Fast**: Offers near local compilation and runtimes speed, No need to wait for 5 seconds to run your HelloWorld code as in tradition online compilers
 
-
-## Public API
-A Public API of runx is available for hobby users and testing purposes. It's limited to 5 submissions per second to enforce ***fair-usage policy***
-
-**API URL**: ~~https://runx.alanj.live/~~
-
 ### API Usage
 
 1. List available languages or runtimes
